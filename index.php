@@ -8,7 +8,7 @@
 </head>
 
 <body>
-	<form action="form.php" method="post">
+	<form action="index.php" method="post">
 		<p>
 			<label>Имя<br><br>
 				<input placeholder="Имя" type="text" name="name" value="">
@@ -20,7 +20,7 @@
 		</p>
 		<p>
 			<label>Год рождения<br><br>
-				<select name="" id="">
+				<select name="year">
 					<option value="-1">&nbsp;</option>
 					<?php
 					for ($i = 2008; $i >= 1900; --$i) {
