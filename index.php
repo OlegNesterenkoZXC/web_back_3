@@ -21,7 +21,7 @@
 		<p>
 			<label>Год рождения<br><br>
 				<select name="year">
-					<option value="-1">&nbsp;</option>
+					<option value="">Select...</option>
 					<?php
 					for ($i = 2008; $i >= 1900; --$i) {
 						echo "<option value='$i'>$i</option>";
@@ -32,29 +32,29 @@
 		</p>
 		<p>Пол<br><br>
 			<label>
-				<input type="radio" name="radio-gender" value="man">Мужской
+				<input type="radio" name="gender" value="man">Мужской
 			</label>
 			<label>
-				<input type="radio" name="radio-gender" value="woman">Женский
+				<input type="radio" name="gender" value="woman">Женский
 			</label>
 		</p>
 		<p>Количество конечностей<br><br>
 			<label>
-				<input type="radio" name="radio-numlimbs" value="1">1
+				<input type="radio" name="numlimbs" value="1">1
 			</label>
 			<label>
-				<input type="radio" name="radio-numlimbs" value="2">2
+				<input type="radio" name="numlimbs" value="2">2
 			</label>
 			<label>
-				<input type="radio" name="radio-numlimbs" value="3">3
+				<input type="radio" name="numlimbs" value="3">3
 			</label>
 			<label>
-				<input type="radio" name="radio-numlimbs" value="4">4
+				<input type="radio" name="numlimbs" value="4">4`
 			</label>
 		</p>
 		<p>
 			<label>Сверхспособности<br><br>
-				<select multiple name="super-powers">
+				<select multiple name="super-powers[]">
 					<option value="immortality">Бессмертие</option>
 					<option value="walkthrough-walls">Прохождение сквозь стены</option>
 					<option value="levitation">Левитация</option>
@@ -70,7 +70,7 @@
 		</div>
 		<p>
 			<label>
-				<input type="checkbox" name="agree" value="true">С контранктом ознакомлен
+				<input type="checkbox" name="agree">С контранктом ознакомлен
 				(а)
 			</label>
 		</p>
