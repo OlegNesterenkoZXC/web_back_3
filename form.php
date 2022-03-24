@@ -57,7 +57,6 @@ try {
 	$stmt = $db->prepare("INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
 	$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography, 'agreement' => $agree));
 	$lastId = $db->lastInsertId();
-	echo $lastId;
 } catch (PDOException $e) {
 	print('Error : ' . $e->getMessage());
 	exit();
