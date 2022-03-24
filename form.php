@@ -31,3 +31,22 @@ if (!empty($_POST)) {
 } else {
 	$errors[] = "Неверные данные формы!";
 }
+
+if (isset($errors)) {
+	foreach ($errors as $value) {
+		echo "$value<br>";
+	}
+	exit();
+}
+$name = htmlspecialchars($_POST["name"]);
+$email = htmlspecialchars($_POST["email"]);
+$year = intval(htmlspecialchars($_POST["year"]));
+$gender = htmlspecialchars($_POST["gender"]);
+$limbs = intval(htmlspecialchars($_POST["numlimbs"]));
+$superPowers = $_POST["super-powers"];
+$biography = htmlspecialchars($_POST["biography"]);
+if (!isset($_POST["agree"])) {
+	$agree = false;
+} else {
+	$agree = true;
+}
