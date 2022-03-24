@@ -58,10 +58,21 @@ $dbName = $user;
 $db = new PDO("mysql:host=$serverName;dbname=$dbName", $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
 try {
-	//$stmt = $dbU->prepare("INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
-
 	$stmt = $db->prepare("INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
 	$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography, 'agreement' => $agree));
+} catch (PDOException $e) {
+	print('Error : ' . $e->getMessage());
+	exit();
+}
+
+try {
+	$stmt = $db->prepare("INSERT INTO user_power (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
+	$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography, 'agreement' => $agree));
+
+	foreach ($superPowers as $value) {
+		$stmt = $db->prepare("INSERT INTO user_power (power) VALUES (:power)");
+		$stmt->execute(array('power' => $value));
+	}
 } catch (PDOException $e) {
 	print('Error : ' . $e->getMessage());
 	exit();
