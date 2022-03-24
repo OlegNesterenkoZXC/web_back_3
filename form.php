@@ -25,12 +25,9 @@ if (!empty($_POST)) {
 	if (!isset($_POST["super-powers"])) {
 		$errors[] = "Выберите хотя бы одну суперспособность!";
 	}
+	if (empty($_POST["biography"])) {
+		$errors[] = "Расскажите что-нибудь о себе!";
+	}
 } else {
 	$errors[] = "Неверные данные формы!";
-}
-
-if (isset($errors)) {
-	foreach ($errors as $value) {
-		echo "$value<br>";
-	}
 }
