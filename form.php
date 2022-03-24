@@ -55,19 +55,14 @@ $user = "u47565";
 $pass = "7165854";
 $dbName = $user;
 
-$dbUser = new PDO("mysql:host=$serverName;dbname=$dbName", $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+$db = new PDO("mysql:host=$serverName;dbname=$dbName", $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
 try {
-	$stmt = $dbUser->prepare("INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
+	//$stmt = $dbU->prepare("INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
 
-	$stmt->bindParam(':name', $name);
-	$stmt->bindParam(':email', $email);
-	$stmt->bindParam(':date', $year);
-	$stmt->bindParam(':limbs', $limbs);
-	$stmt->bindParam(':biography', $biography);
-	$stmt->bindParam(':agreement', $agree);
+	$sql = "INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES ($name, $email, $year, $gender, $limbs, $biography,$agree)";
 
-	$stmt->execute();
+	$db->exec($sql);
 } catch (PDOException $e) {
 	print('Error : ' . $e->getMessage());
 	exit();
