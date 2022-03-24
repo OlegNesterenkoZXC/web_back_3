@@ -60,10 +60,10 @@ $db = new PDO("mysql:host=$serverName;dbname=$dbName", $user, $pass, array(PDO::
 try {
 	//$stmt = $dbU->prepare("INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
 
-	$sql = "INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES ($name, $email, $year, $gender, $limbs, $biography,$agree)";
-
-	$db->exec($sql);
+	$stmt = $db->prepare("INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
+	$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography, 'agreement' => $agree));
 } catch (PDOException $e) {
 	print('Error : ' . $e->getMessage());
 	exit();
 }
+$db = null;
