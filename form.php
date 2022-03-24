@@ -1,17 +1,12 @@
 <?php
 
 header('Content-Type: text/html; charset=UTF-8');
-
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-
 if (!empty($_POST)) {
 	if (empty($_POST["name"])) {
-		$errors[] = "Поле 'имя' пустое!";
+		$errors[] = "Введите имя!";
 	}
 	if (empty($_POST["email"])) {
-		$errors[] = "Поле 'e-mail' пустое!";
+		$errors[] = "Введите e-mail!";
 	}
 	if (empty($_POST["year"])) {
 		$errors[] = "Выберите год рождения!";
@@ -81,3 +76,4 @@ try {
 	exit();
 }
 $db = null;
+echo "Данные отправлены!";
