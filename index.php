@@ -7,7 +7,7 @@
 	<title>BackEnd3</title>
 </head>
 
-<body>
+<body style="font-size: 20px;">
 	<form action="form.php" method="post">
 		<p>
 			<label>Имя<br><br>
@@ -49,7 +49,7 @@
 				<input type="radio" name="numlimbs" value="3">3
 			</label>
 			<label>
-				<input type="radio" name="numlimbs" value="4">4`
+				<input type="radio" name="numlimbs" value="4">4
 			</label>
 		</p>
 		<p>
