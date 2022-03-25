@@ -41,10 +41,11 @@ $limbs = intval(htmlspecialchars($_POST["numlimbs"]));
 $superPowers = $_POST["super-powers"];
 $biography = htmlspecialchars($_POST["biography"]);
 if (!isset($_POST["agree"])) {
-	$agree = false;
+	$agree = 0;
 } else {
-	$agree = true;
+	$agree = 1;
 }
+echo "<br>" . $agree . "<br>";
 $serverName = 'localhost';
 $user = "u47565";
 $pass = "7165854";
