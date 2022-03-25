@@ -45,7 +45,7 @@ if (!isset($_POST["agree"])) {
 } else {
 	$agree = 1;
 }
-echo "<br>" . $agree . "<br>";
+
 $serverName = 'localhost';
 $user = "u47565";
 $pass = "7165854";
