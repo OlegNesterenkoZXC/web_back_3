@@ -12,11 +12,11 @@
 	<form action="form.php" method="post">
 		<p>
 			<label>Имя<br><br>
-				<input placeholder="Имя" type="text" name="name" value="">
+				<input placeholder="Имя" type="text" name="name">
 			</label>
 		<p>
 			<label>E-mail<br><br>
-				<input placeholder="E-mail" type="text" name="email" value="">
+				<input placeholder="E-mail" type="text" name="email">
 			</label>
 		</p>
 		<p>
@@ -33,10 +33,10 @@
 		</p>
 		<p>Пол<br><br>
 			<label>
-				<input type="radio" name="gender" value="man">Мужской
+				<input type="radio" name="gender" value="1">Мужской
 			</label>
 			<label>
-				<input type="radio" name="gender" value="woman">Женский
+				<input type="radio" name="gender" value="2">Женский
 			</label>
 		</p>
 		<p>Количество конечностей<br><br>
@@ -56,9 +56,9 @@
 		<p>
 			<label>Сверхспособности<br><br>
 				<select multiple name="super-powers[]">
-					<option value="immortality">Бессмертие</option>
-					<option value="walkthrough-walls">Прохождение сквозь стены</option>
-					<option value="levitation">Левитация</option>
+					<option value="1">Бессмертие</option>
+					<option value="2">Прохождение сквозь стены</option>
+					<option value="3">Левитация</option>
 				</select>
 			</label>
 		</p>
@@ -71,8 +71,7 @@
 		</div>
 		<p>
 			<label>
-				<input type="checkbox" name="agree">С контранктом ознакомлен
-				(а)
+				<input type="checkbox" name="agree" required>Даю согласие на обработку данных
 			</label>
 		</p>
 		<p>
