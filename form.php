@@ -1,20 +1,21 @@
 <?php
 
 header('Content-Type: text/html; charset=UTF-8');
+
 if (!empty($_POST)) {
-	if (empty($_POST["name"])) {
+	if (empty($_POST["name"]) || !preg_match("/^\s*[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?\s*$/u", $_POST["name"])) {
 		$errors[] = "Введите имя!";
 	}
-	if (empty($_POST["email"])) {
+	if (empty($_POST["email"]) || !preg_match("/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/", $_POST["email"])) {
 		$errors[] = "Введите e-mail!";
 	}
-	if (empty($_POST["year"])) {
+	if (empty($_POST["year"]) || !preg_match("/^\s*[1]{1}9{1}\d{1}\d{1}.*$|^\s*200[0-8]{1}.*$/", $_POST["year"])) {
 		$errors[] = "Выберите год рождения!";
 	}
-	if (!isset($_POST["gender"])) {
+	if (!isset($_POST["gender"]) || intval($_POST("gender")) != 1 || intval($_POST("gender")) != 2) {
 		$errors[] = "Выберите пол!";
 	}
-	if (!isset($_POST["numlimbs"])) {
+	if (!isset($_POST["numlimbs"]) || intval($_POST["numlimbs"]) < 1 || 4 < intval($_POST["numlimbs"])) {
 		$errors[] = "Выберите кол-во конечностей!";
 	}
 	if (!isset($_POST["super-powers"])) {
@@ -33,6 +34,7 @@ if (isset($errors)) {
 	}
 	exit();
 }
+
 $name = htmlspecialchars($_POST["name"]);
 $email = htmlspecialchars($_POST["email"]);
 $year = intval(htmlspecialchars($_POST["year"]));
