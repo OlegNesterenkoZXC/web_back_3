@@ -132,18 +132,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		header("Location: index.php");
 	}
 
-	$name = htmlspecialchars($_POST["name"]);
-	$email = htmlspecialchars($_POST["email"]);
-	$year = intval(htmlspecialchars($_POST["year"]));
-	$gender = htmlspecialchars($_POST["gender"]);
-	$limbs = intval(htmlspecialchars($_POST["numlimbs"]));
+	$name = $_POST["name"];
+	$email = $_POST["email"];
+	$year = intval($_POST["year"]);
+	$gender = $_POST["gender"];
+	$limbs = intval($_POST["numlimbs"]);
 	$superPowers = $_POST["super-powers"];
-	$biography = htmlspecialchars($_POST["biography"]);
-	if (!isset($_POST["agree"])) {
-		$agree = 0;
-	} else {
-		$agree = 1;
-	}
+	$biography = $_POST["biography"];
 
 	$serverName = 'localhost';
 	$user = "u47565";
@@ -178,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	setcookie("save", '1', time() + 60 * 60 * 24);
 	header("Location: index.php");
 }
+
 function getCoookies($name, &$message)
 {
 	if (!empty($_COOKIE[$name])) {
