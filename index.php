@@ -160,6 +160,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		exit();
 	}
 	$db = null;
-	setcookie("save", '1', time() + 60 * 60 * 24 * 30);
+	setcookie("save", '1', time() + 60 * 60 * 24);
 	header("Location: index.php");
 }
