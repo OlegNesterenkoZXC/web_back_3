@@ -130,6 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	if (isset($errors)) {
 		header("Location: index.php");
+		exit();
 	}
 
 	$name = $_POST["name"];
@@ -149,8 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	$lastId = null;
 	try {
-		$stmt = $db->prepare("INSERT INTO user (name, email, date, gender, limbs, biography, agreement) VALUES (:name, :email, :date, :gender, :limbs, :biography, :agreement)");
-		$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography, 'agreement' => $agree));
+		$stmt = $db->prepare("INSERT INTO user2 (name, email, date, gender, limbs, biography) VALUES (:name, :email, :date, :gender, :limbs, :biography)");
+		$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography));
 		$lastId = $db->lastInsertId();
 	} catch (PDOException $e) {
 		print('Error : ' . $e->getMessage());
@@ -162,8 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			exit();
 		}
 		foreach ($superPowers as $value) {
-			$stmt = $db->prepare("INSERT INTO user_power (id, power) VALUES (:id, :power)");
-			$stmt->execute(array('id' => $lastId, 'power' => $value));
+			$stmt = $db->prepare("INSERT INTO user_power2 (id, power) VALUES (:id, :power)");
+			$stmt->execute(array('id' => $lastId, 'power' => intval($value)));
 		}
 	} catch (PDOException $e) {
 		print('Error : ' . $e->getMessage());
