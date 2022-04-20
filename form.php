@@ -3,29 +3,52 @@
 header('Content-Type: text/html; charset=UTF-8');
 
 if (!empty($_POST)) {
-	if (empty($_POST["name"]) || !preg_match("/^\s*[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?\s*$/u", $_POST["name"])) {
-		$errors[] = "Введите имя!";
+	if (empty($_POST["name"])) {
+		$errors['name'] = "Введите имя!";
+	} elseif (!preg_match("/^\s*[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?\s*$/u", $_POST["name"])) {
+		$errors['name'] = "Несуществующее имя!";
 	}
-	if (empty($_POST["email"]) || !preg_match("/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/", $_POST["email"])) {
-		$errors[] = "Введите e-mail!";
+
+	if (empty($_POST["email"])) {
+		$errors['email'] = "Введите e-mail!";
+	} elseif (!preg_match("/^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/", $_POST["email"])) {
+		$errors['email'] = "Несуществующий e-mail!";
 	}
-	if (empty($_POST["year"]) || !preg_match("/^\s*[1]{1}9{1}\d{1}\d{1}.*$|^\s*200[0-8]{1}.*$/", $_POST["year"])) {
-		$errors[] = "Выберите год рождения!";
+
+	if (empty($_POST["year"])) {
+		$errors['year'] = "Выберите год рождения!";
+	} elseif (!preg_match("/^\s*[1]{1}9{1}\d{1}\d{1}.*$|^\s*200[0-8]{1}.*$/", $_POST["year"])) {
+		$errors["request-error"] = "Ошибка запроса!";
 	}
-	if (!isset($_POST["gender"]) || intval($_POST("gender")) != 1 || intval($_POST("gender")) != 2) {
-		$errors[] = "Выберите пол!";
+
+	if (!isset($_POST["gender"])) {
+		$errors['gender'] = "Выберите пол!";
+	} elseif (intval($_POST["gender"]) < 1 && 2 < intval($_POST["gender"])) {
+		$errors["request-error"] = "Ошибка запроса!";
 	}
-	if (!isset($_POST["numlimbs"]) || intval($_POST["numlimbs"]) < 1 || 4 < intval($_POST["numlimbs"])) {
-		$errors[] = "Выберите кол-во конечностей!";
+
+	if (!isset($_POST["numlimbs"])) {
+		$errors['numlimbs'] = "Выберите кол-во конечностей!";
+	} elseif (intval($_POST["numlimbs"]) < 1 || 4 < intval($_POST["numlimbs"])) {
+		$errors["request-error"] = "Ошибка запроса!";
 	}
+
 	if (!isset($_POST["super-powers"])) {
-		$errors[] = "Выберите хотя бы одну суперспособность!";
+		$errors['super-powers'] = "Выберите хотя бы одну суперспособность!";
+	} else {
+		foreach ($_POST["super-powers"] as $value) {
+			if (intval($value) < 1 || 3 < intval($value)) {
+				$errors["request-error"] = "Ошибка запроса!";
+				break;
+			}
+		}
 	}
+
 	if (empty($_POST["biography"])) {
-		$errors[] = "Расскажите что-нибудь о себе!";
+		$errors['biography'] = "Расскажите что-нибудь о себе!";
 	}
 } else {
-	$errors[] = "Неверные данные формы!";
+	$errors["request-error"] = "Ошибка запроса!";
 }
 
 if (isset($errors)) {
