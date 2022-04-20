@@ -9,48 +9,24 @@
 </head>
 
 <body>
-	<?php
-	if (!empty($_COOKIE['save'])) {
-		setcookie("save", '', time() - 60 * 60 * 24 * 30);
-		echo "Данные отправленны!";
-	}
-	if (!empty($_COOKIE['request-error'])) {
-		setcookie("request-error", '', time() - 60 * 60 * 24 * 30);
-		echo "{$_COOKIE['request-error']}";
-	}
-	?>
 	<div class="form">
 		<div class="form__header">
-			<div class="form__contaner">
-				<span class="form__span form__span_header">ЗАПОЛНИТЕ</span>
-			</div>
-			<div class="form__container form__container_good">
-				<span class="form__span">Ваши данные отправленны!</span>
-			</div>
-			<div class="form__container form__container_err">
-				<span class="form__span">Что-то пошло не так! =(</span>
-			</div>
+			<?php
+			echo $fheader;
+			?>
 		</div>
 		<form class="form__body" action="" method="post">
 			<div class="form__item">
 				<label class="form__label">
-					<input class="form__input form__input_text" placeholder="Имя" type="text" name="name">
+					<input class="form__input form__input_text" placeholder="Имя" type="text" name="name" value="<?php echo $message['name']; ?>">
 				</label>
-				<div class="form__container form__container_err">
-					<span class="form__span">Hello</span>
-					<span class="form__span">bad</span>
-					<span class="form__span">game</span>
-				</div>
+				<?php echo $message['name-error']; ?>
 			</div>
 			<div class="form__item">
 				<label class="form__label">
-					<input class="form__input form__input_text" placeholder="E-mail" type="text" name="email">
+					<input class="form__input form__input_text" placeholder="E-mail" type="text" name="email" value="<?php echo $message['email']; ?>">
 				</label>
-				<div class="form__container form__container_err">
-					<span class="form__span">Hello</span>
-					<span class="form__span">bad</span>
-					<span class="form__span">game</span>
-				</div>
+				<?php echo $message['email-error']; ?>
 			</div>
 			<div class="form__item">
 				<label class="form__label">
@@ -58,78 +34,71 @@
 						<option value="" class="form__option">Год</option>
 						<?php
 						for ($i = 2008; $i >= 1900; --$i) {
-							echo "<option class='form__option' value='$i'>$i</option>";
+							if ($i == $message['year']) {
+								echo "<option class='form__option' value='$i' selected>$i</option>";
+							} else {
+								echo "<option class='form__option' value='$i'>$i</option>";
+							}
 						}
 						?>
 					</select>
 				</label>
-				<div class="form__container form__container_err">
-					<span class="form__span">Hello</span>
-					<span class="form__span">bad</span>
-					<span class="form__span">game</span>
-				</div>
+				<?php echo $message['year-error']; ?>
 			</div>
 			<div class="form__item form__item_radio">
 				<div class="form__container">
 					<label class="form__label">
-						<input class="form__radio" type="radio" name="gender" value="1">М
+						<?php
+						if ($message['gender'] == 1) {
+							echo "<input class='form__radio' type='radio' name='gender' value='1' checked>М";
+						} else {
+							echo "<input class='form__radio' type='radio' name='gender' value='1'>М";
+						}
+						?>
 					</label>
 					<label class="form__label">
-						<input class="form__radio" type="radio" name="gender" value="2">Ж
+						<?php
+						if ($message['gender'] == 2) {
+							echo "<input class='form__radio' type='radio' name='gender' value='2'checked>Ж";
+						} else {
+							echo "<input class='form__radio' type='radio' name='gender' value='2'>Ж";
+						}
+						?>
 					</label>
 				</div>
-				<div class="form__container form__container_err">
-					<span class="form__span">Hello</span>
-					<span class="form__span">bad</span>
-					<span class="form__span">game</span>
-				</div>
+				<?php echo $message['gender-error']; ?>
 			</div>
 			<div class="form__item form__item_numlimbs">
 				<span class="form__span">Количество конечностей</span>
 				<div class="form__container">
-					<label class="form__label">
-						<input class="form__radio" type="radio" name="numlimbs" value="1">1
-					</label>
-					<label class="form__label">
-						<input class="form__radio" type="radio" name="numlimbs" value="2">2
-					</label>
-					<label class="form__label">
-						<input class="form__radio" type="radio" name="numlimbs" value="3">3
-					</label>
-					<label class="form__label">
-						<input class="form__radio" type="radio" name="numlimbs" value="4">4
-					</label>
+					<?php
+					for ($i = 1; $i <= 4; $i++) {
+						if ($message['numlimbs'] == $i) {
+							echo "<label class='form__label'><input class='form__radio' type='radio' name='numlimbs' value='$i' checked>$i</label>";
+						} else {
+							echo "<label class='form__label'><input class='form__radio' type='radio' name='numlimbs' value='$i'>$i</label>";
+						}
+					}
+					?>
 				</div>
-				<div class="form__container form__container_err">
-					<span class="form__span">Hello</span>
-					<span class="form__span">bad</span>
-					<span class="form__span">game</span>
-				</div>
+				<?php echo $message['numlimbs-error']; ?>
 			</div>
 			<div class="form__item form__item_sp">
 				<label class="form__label">
 					<span class="form__span">Сверхспособности</span>
 					<select multiple name="super-powers[]" class="form__select">
-						<option class="form__oprion" value="1">Бессмертие</option>
-						<option class="form__oprion" value="2">Прохождение сквозь стены</option>
-						<option class="form__oprion" value="3">Левитация</option>
+						<option class="form__oprion" <?php echo $message['super-powers-1'] == '1' ? 'selected' : ''; ?> value="1">Бессмертие</option>
+						<option class="form__oprion" <?php echo $message['super-powers-2'] == '1' ? 'selected' : ''; ?> value="2">Прохождение сквозь стены</option>
+						<option class="form__oprion" <?php echo $message['super-powers-3'] == '1' ? 'selected' : ''; ?> value="3">Левитация</option>
 					</select>
 				</label>
-				<div class="form__container form__container_err">
-					<span class="form__span">Hello</span>
-					<span class="form__span">bad</span>
-					<span class="form__span">game</span>
-				</div>
+				<?php echo $message['super-powers-error'] ?>
 			</div>
 			<div class="form__item">
 				<label class="form__label">
-					<textarea class="form__textarea" placeholder="Расскажите о себе" name="biography"></textarea>
+					<textarea class="form__textarea" placeholder="Расскажите о себе" name="biography"><?php echo $message['biography']; ?></textarea>
 				</label>
-				<div class="form__container form__container_err">
-					<span class="form__span">Hello</span>
-					<span class="form__span">bad</span>
-					<span class="form__span">game</span>
-				</div>
+				<?php echo $message['biography-error'] ?>
 			</div>
 			<div class="form__item form__item_agreement">
 				<label class="form__label">

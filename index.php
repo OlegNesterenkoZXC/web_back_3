@@ -1,7 +1,28 @@
 <?php
-
-//header('Content-Type: text/html; charset=UTF-8');
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+	if (!empty($_COOKIE['save'])) {
+		setcookie("save", '', time() - 60 * 60 * 24);
+		$fheader =  "<div class='form__container form__container_good'><span class='form__span'>Ваши данные отправленны!</span></div>";
+	} elseif (!empty($_COOKIE['request-error'])) {
+		setcookie("request-error", '', time() - 60 * 60 * 24);
+		$fheader =  "<div class='form__container form__container_err'><span class='form__span'>Что-то пошло не так! =(</span></div> ";
+	} else {
+		$fheader =  "<div class='form__contaner'><span class='form__span form__span_header'>ЗАПОЛНИТЕ</span></div>";
+	}
+
+	$message = array();
+	getCoookies('name', $message);
+	getCoookies('email', $message);
+	getCoookies('year', $message);
+	getCoookies('gender', $message);
+	getCoookies('numlimbs', $message);
+	getCoookies('super-powers', $message);
+	getCoookies('super-powers-1', $message);
+	getCoookies('super-powers-2', $message);
+	getCoookies('super-powers-3', $message);
+	getCoookies('biography', $message);
+
+
 	include_once("form.php");
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$requestError = false;
@@ -19,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		}
 
 		if (empty($_POST["year"])) {
-			$errors['year'] = "Выберите год рождения!";
+			$errors['year'] = "Выберите год!";
 		} elseif (!preg_match("/^\s*[1]{1}9{1}\d{1}\d{1}.*$|^\s*200[0-8]{1}.*$/", $_POST["year"])) {
 			$requestError = true;
 		}
@@ -53,14 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	} else {
 		$requestError = true;
 	}
-
-
-	/*if (isset($errors)) {
-		foreach ($errors as $value) {
-			echo "$value<br>";
-		}
-		exit();
-	}*/
 
 	if ($requestError) {
 		setcookie("request-error", '1', time() + 60 * 60 * 24);
@@ -115,7 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		}
 	}
 
-	header("Location: index.php");
+	if (isset($errors)) {
+		header("Location: index.php");
+	}
 
 	$name = htmlspecialchars($_POST["name"]);
 	$email = htmlspecialchars($_POST["email"]);
@@ -162,4 +177,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$db = null;
 	setcookie("save", '1', time() + 60 * 60 * 24);
 	header("Location: index.php");
+}
+function getCoookies($name, &$message)
+{
+	if (!empty($_COOKIE[$name])) {
+		$message[$name] = $_COOKIE[$name];
+	} else {
+		$message[$name] = '';
+	}
+	if (!empty($_COOKIE[$name . '-error'])) {
+		$message[$name . '-error'] = "<div class='form__container form__container_err'><span class='form__span'>{$_COOKIE[$name . '-error']}</span></div>";
+		setcookie($name . '-error', '', time() - 60 * 60 * 24);
+	} else {
+		$message[$name . '-error'] = '';
+	}
 }
