@@ -11,16 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 
 	$message = array();
-	getCoookies('name', $message);
-	getCoookies('email', $message);
-	getCoookies('year', $message);
-	getCoookies('gender', $message);
-	getCoookies('numlimbs', $message);
-	getCoookies('super-powers', $message);
-	getCoookies('super-powers-1', $message);
-	getCoookies('super-powers-2', $message);
-	getCoookies('super-powers-3', $message);
-	getCoookies('biography', $message);
+	checkCookies('name', $message);
+	checkCookies('email', $message);
+	checkCookies('year', $message);
+	checkCookies('gender', $message);
+	checkCookies('numlimbs', $message);
+	checkCookies('super-powers', $message);
+	checkCookies('super-powers-1', $message);
+	checkCookies('super-powers-2', $message);
+	checkCookies('super-powers-3', $message);
+	checkCookies('biography', $message);
 
 
 	include_once("form.php");
@@ -79,35 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		setcookie("request-error", '1', time() + 60 * 60 * 24);
 		header("Location: index.php");
 	} else {
-		if (isset($errors['name'])) {
-			setcookie('name-error', $errors['name'], time() + 60 * 60 * 24);
-		} else {
-			setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 365);
-		}
-
-		if (isset($errors['email'])) {
-			setcookie('email-error', $errors['email'], time() + 60 * 60 * 24);
-		} else {
-			setcookie('email', $_POST['email'], time() + 60 * 60 * 24 * 365);
-		}
-
-		if (isset($errors['year'])) {
-			setcookie('year-error', $errors['year'], time() + 60 * 60 * 24);
-		} else {
-			setcookie('year', $_POST['year'], time() + 60 * 60 * 24 * 365);
-		}
-
-		if (isset($errors['gender'])) {
-			setcookie('gender-error', $errors['gender'], time() + 60 * 60 * 24);
-		} else {
-			setcookie('gender', $_POST['gender'], time() + 60 * 60 * 24 * 365);
-		}
-
-		if (isset($errors['numlimbs'])) {
-			setcookie('numlimbs-error', $errors['numlimbs'], time() + 60 * 60 * 24);
-		} else {
-			setcookie('numlimbs', $_POST['numlimbs'], time() + 60 * 60 * 24 * 365);
-		}
+		writeCookies('name', $errors);
+		writeCookies('email', $errors);
+		writeCookies('year', $errors);
+		writeCookies('gender', $errors);
+		writeCookies('numlimbs', $errors);
+		writeCookies('biography', $errors);
 
 		if (isset($errors['super-powers'])) {
 			setcookie('super-powers-error', $errors['super-powers'], time() + 60 * 60 * 24);
@@ -119,12 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			foreach ($supPowers as $key => $value) {
 				setcookie("super-powers-$key", $value,  time() + 60 * 60 * 24 * 365);
 			}
-		}
-
-		if (isset($errors['biography'])) {
-			setcookie('biography-error', $errors['biography'], time() + 60 * 60 * 24);
-		} else {
-			setcookie('biography', $_POST['biography'], time() + 60 * 60 * 24 * 365);
 		}
 	}
 
@@ -171,11 +142,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		exit();
 	}
 	$db = null;
+
 	setcookie("save", '1', time() + 60 * 60 * 24);
 	header("Location: index.php");
 }
 
-function getCoookies($name, &$message)
+function checkCookies($name, &$message)
 {
 	if (!empty($_COOKIE[$name])) {
 		$message[$name] = $_COOKIE[$name];
@@ -187,5 +159,13 @@ function getCoookies($name, &$message)
 		setcookie($name . '-error', '', time() - 60 * 60 * 24);
 	} else {
 		$message[$name . '-error'] = '';
+	}
+}
+function writeCookies($name, &$errors)
+{
+	if (isset($errors[$name])) {
+		setcookie($name . '-error', $errors[$name], time() + 60 * 60 * 24);
+	} else {
+		setcookie($name, $_POST[$name], time() + 60 * 60 * 24 * 365);
 	}
 }
