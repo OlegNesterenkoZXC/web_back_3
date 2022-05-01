@@ -43,7 +43,7 @@ button { cursor: pointer; font-weight: 500; }
 
 select { border: 2px solid rgba(0, 0, 0, 0.6); background-color: #fff; min-width: 200px; }
 
-.form { margin: 0 auto; margin-top: 50px; margin-bottom: 50px; max-width: 300px; background-color: #fff; border: 1px solid black; }
+.form { -webkit-box-shadow: -0.6rem 0.6rem 0 rgba(29, 30, 28, 0.26); box-shadow: -0.6rem 0.6rem 0 rgba(29, 30, 28, 0.26); margin: 0 auto; margin-top: 50px; margin-bottom: 50px; max-width: 300px; background-color: #fff; border: 1px solid black; }
 
 .form__body { font-size: 14px; }
 
