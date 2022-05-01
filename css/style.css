@@ -37,7 +37,7 @@ input, button, textarea { border: 2px solid rgba(0, 0, 0, 0.6); background-image
 
 input:focus, button:focus, textarea:focus { outline: none; }
 
-textarea { min-height: 50px; resize: vertical; }
+textarea { min-width: 100%; min-height: 50px; resize: vertical; }
 
 button { cursor: pointer; font-weight: 500; }
 
