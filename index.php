@@ -2,12 +2,12 @@
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (!empty($_COOKIE['save'])) {
 		setcookie("save", '', time() - 60 * 60 * 24);
-		$fheader =  "<div class='form__container form__container_good'><span class='form__span'>Ваши данные отправленны!</span></div>";
+		$fheader = "<div class='form__container form__container_good'><span class='form__span'>Ваши данные отправленны!</span></div>";
 	} elseif (!empty($_COOKIE['request-error'])) {
 		setcookie("request-error", '', time() - 60 * 60 * 24);
-		$fheader =  "<div class='form__container form__container_err'><span class='form__span'>Что-то пошло не так! =(</span></div> ";
+		$fheader = "<div class='form__container form__container_err'><span class='form__span'>Что-то пошло не так! =(</span></div>";
 	} else {
-		$fheader =  "<div class='form__contaner'><span class='form__span form__span_header'>ЗАПОЛНИТЕ</span></div>";
+		$fheader = "<div class='form__contaner'><span class='form__span form__span_header'>ЗАПОЛНИТЕ</span></div>";
 	}
 
 	$message = array();
@@ -17,11 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	checkCookies('gender', $message);
 	checkCookies('numlimbs', $message);
 	checkCookies('super-powers', $message);
-	checkCookies('super-powers-1', $message);
-	checkCookies('super-powers-2', $message);
-	checkCookies('super-powers-3', $message);
 	checkCookies('biography', $message);
-
 
 	include_once("form.php");
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -89,12 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		if (isset($errors['super-powers'])) {
 			setcookie('super-powers-error', $errors['super-powers'], time() + 60 * 60 * 24);
 		} else {
-			$supPowers = ['1' => '0', '2' => '0', '3' => 0];
-			foreach ($_POST['super-powers'] as $key => $value) {
+			$supPowers = array('1' => '0', '2' => '0', '3' => '0');
+			foreach ($_POST['super-powers'] as $value) {
 				$supPowers[$value] = '1';
 			}
 			foreach ($supPowers as $key => $value) {
-				setcookie("super-powers-$key", $value,  time() + 60 * 60 * 24 * 365);
+				setcookie("super-powers[$key]", $value, time() + 60 * 60 * 24 * 365);
 			}
 		}
 	}

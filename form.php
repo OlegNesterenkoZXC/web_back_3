@@ -87,9 +87,9 @@
 				<label class="form__label">
 					<span class="form__span">Сверхспособности</span>
 					<select multiple name="super-powers[]" class="form__select">
-						<option class="form__oprion" <?php echo $message['super-powers-1'] == '1' ? 'selected' : ''; ?> value="1">Бессмертие</option>
-						<option class="form__oprion" <?php echo $message['super-powers-2'] == '1' ? 'selected' : ''; ?> value="2">Прохождение сквозь стены</option>
-						<option class="form__oprion" <?php echo $message['super-powers-3'] == '1' ? 'selected' : ''; ?> value="3">Левитация</option>
+						<option class="form__oprion" <?php echo ((isset($message["super-powers"]['1']) && $message["super-powers"]['1'] == '1') ? 'selected' : ''); ?> value="1">Бессмертие</option>
+						<option class="form__oprion" <?php echo ((isset($message["super-powers"]['2']) && $message["super-powers"]['2'] == '1') ? 'selected' : ''); ?> value="2">Прохождение сквозь стены</option>
+						<option class="form__oprion" <?php echo ((isset($message["super-powers"]['3']) && $message["super-powers"]['3'] == '1') ? 'selected' : ''); ?> value="3">Левитация</option>
 					</select>
 				</label>
 				<?php echo $message['super-powers-error'] ?>
