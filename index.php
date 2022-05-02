@@ -2,7 +2,15 @@
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (!empty($_COOKIE['save'])) {
 		setcookie("save", '', time() - 60 * 60 * 24);
-		$fheader = "<div class='form__container form__container_good'><span class='form__span'>Ваши данные отправленны!</span></div>";
+		setcookie("login", '', time() - 60 * 60 * 24);
+		setcookie("password", '', time() - 60 * 60 * 24);
+
+		$fheader = "<div class='form__container form__container_good'>
+		<span class='form__span'>Ваши данные отправленны!</span>
+		</div>
+		<div class='form__container'>
+		<span class='form__span'>Вы можете <a href='.\login.php'>войти</a> по логину: <strong>{$_COOKIE['login']}</strong> и паролю: <strong>{$_COOKIE['password']}</strong></span>
+		</div>";
 	} elseif (!empty($_COOKIE['request-error'])) {
 		setcookie("request-error", '', time() - 60 * 60 * 24);
 		$fheader = "<div class='form__container form__container_err'><span class='form__span'>Что-то пошло не так! =(</span></div>";
