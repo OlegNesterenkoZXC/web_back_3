@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	checkCookies('super-powers', $message);
 	checkCookies('biography', $message);
 
-	include_once("form.php");
+	require_once("form.php");
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$requestError = false;
 	if (!empty($_POST)) {
