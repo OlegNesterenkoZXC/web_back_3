@@ -21,6 +21,12 @@ power varchar(128) NOT NULL DEFAULT '',
 PRIMARY KEY (id)
 );
 
+CREATE TABLE user_passwords (
+id int(10) unsigned NOT NULL,
+password varchar(256) NOT NULL DEFAULT '',
+PRIMARY KEY (id)
+);
+
 INSERT INTO power (id, power) VALUES (1, 'immortality');
 INSERT INTO power (id, power) VALUES (2, 'levitation');
 INSERT INTO power (id, power) VALUES (3, 'walkthrough-walls');
