@@ -165,3 +165,15 @@ function writeCookies($name, &$errors)
 		setcookie($name, $_POST[$name], time() + 60 * 60 * 24 * 365);
 	}
 }
+function gen_password($length = 12)
+{
+	$chars = 'qazxswedcvfrtgbnhyujmkiolp1234567890QAZXSWEDCVFRTGBNHYUJMKIOLP';
+	$size = strlen($chars) - 1;
+	$password = '';
+
+	while ($length--) {
+		$password .= $chars[random_int(0, $size)];
+	}
+
+	return $password;
+}
