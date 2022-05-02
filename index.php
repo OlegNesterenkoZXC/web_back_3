@@ -137,6 +137,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		print('Error : ' . $e->getMessage());
 		exit();
 	}
+
+	$login = $lastId;
+	$password = gen_password();
+	try {
+		$stmt = $db->prepare("INSERT INTO user_passwords (id, password) VALUES (:id, :password)");
+		$stmt->execute(array('id' => $login, 'password' => password_hash($password, PASSWORD_DEFAULT)));
+	} catch (PDOException $e) {
+		print('Error : ' . $e->getMessage());
+		exit();
+	}
+
+	setcookie('login', $login, time() + 60 * 60 * 24);
+	setcookie('password', $password, time() + 60 * 60 * 24);
+
 	$db = null;
 
 	setcookie("save", '1', time() + 60 * 60 * 24);
