@@ -9,7 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		<span class='form__span'>Ваши данные отправленны!</span>
 		</div>
 		<div class='form__container'>
-		<span class='form__span'>Вы можете <a href='.\login.php'>войти</a> по логину: <strong>{$_COOKIE['login']}</strong> и паролю: <strong>{$_COOKIE['password']}</strong></span>
+			<p class='form__p'>Вы можете <a href='login.php' class='form__a'>войти</a>!</p>
+			<p class='form__p'>По логину: <strong>{$_COOKIE['login']}</strong></p>
+			<p class='form__p'>И паролю: <strong>{$_COOKIE['password']}</strong></p>
 		</div>";
 	} elseif (!empty($_COOKIE['request-error'])) {
 		setcookie("request-error", '', time() - 60 * 60 * 24);
