@@ -47,13 +47,15 @@ select { border: 2px solid rgba(0, 0, 0, 0.6); background-color: #fff; min-width
 
 .form__body { font-size: 14px; }
 
-.form__header { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; padding: 10px 0; border-bottom: 1px solid black; text-align: center; }
+.form__header { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; padding: 10px; border-bottom: 1px solid black; }
 
 .form__header .none { display: none; }
 
-.form__header .form__container { border: 2px solid rgba(0, 0, 0, 0.6); }
+.form__header .form__container { display: block; border: 2px solid rgba(0, 0, 0, 0.6); text-align: start; width: 100%; }
 
-.form__header .form__container_good { background-color: #ADD3A6; color: #306D27; }
+.form__header .form__container_good { text-align: center; background-color: #ADD3A6; color: #306D27; }
+
+.form__footer { border-top: 1px solid black; padding: 10px 0; text-align: center; }
 
 .form__container_err { padding: 5px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; word-wrap: break-word; color: #5A161B; width: 200px; background-color: #C58D91; border: 2px solid rgba(0, 0, 0, 0.6); border-top: none; }
 
