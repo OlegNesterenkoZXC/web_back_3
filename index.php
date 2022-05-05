@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("src/functions.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -20,6 +21,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		$fheader = "<div class='form__container form__container_err'><span class='form__span'>Что-то пошло не так! =(</span></div>";
 	} else {
 		$fheader = "<div class='form__contaner'><span class='form__span form__span_header'>ЗАПОЛНИТЕ</span></div>";
+	}
+
+	if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
+		$ffooter =
+			"<div class='form__footer'>
+			<p class='form__p'>
+				Вы авторизованы, ваш логин: <strong>{$_SESSION['login']}</strong>
+			</p>
+			<p class='form__p'>
+				Вы можете <a href='login.php' class='form__a'>выйти</a>!
+			</p>
+		</div>";
+	} else {
+		$ffooter =
+			"<div class='form__footer'>
+				<p class='form__p'>
+					У вас уже есть аккаунт?
+				</p>
+				<p class='form__p'>
+					Вы можете <a href='login.php' class='form__a'> войти</a>!
+				</p>
+			</div>";
 	}
 
 	$message = array();

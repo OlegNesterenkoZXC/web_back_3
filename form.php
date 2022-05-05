@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="#" type="image/x-icon">
 	<link rel="stylesheet" href="css/style.css">
-	<title>BackEnd4</title>
+	<title>BackEnd5</title>
 </head>
 
 <body>
@@ -112,14 +112,9 @@
 				</label>
 			</div>
 		</form>
-		<div class="form__footer">
-			<p class="form__p">
-				У вас уже есть аккаунт?
-			</p>
-			<p class="form__p">
-				Вы можете <a href="login.php" class="form__a"> войти</a>!
-			</p>
-		</div>
+		<?php
+		echo $ffooter;
+		?>
 	</div>
 </body>
 
