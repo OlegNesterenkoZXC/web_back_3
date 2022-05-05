@@ -21,8 +21,9 @@ power varchar(128) NOT NULL DEFAULT '',
 PRIMARY KEY (id)
 );
 
-CREATE TABLE user_passwords (
+CREATE TABLE user_authentication (
 id int(10) unsigned NOT NULL,
+login varchar(256) NOT NULL DEFAULT '',
 password varchar(256) NOT NULL DEFAULT '',
 PRIMARY KEY (id)
 );
