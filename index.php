@@ -149,12 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$superPowers = $_POST["super-powers"];
 	$biography = $_POST["biography"];
 
-	$serverName = 'localhost';
-	$user = "u47565";
-	$pass = "7165854";
-	$dbName = $user;
-
-	$db = new PDO("mysql:host=$serverName;dbname=$dbName", $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+	require_once("src/db.php");
+	$db = new PDO("mysql:host=$dbServerName;dbname=$dbName", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
 
 	if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
 		$userId = intval($_SESSION['loginid']);

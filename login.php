@@ -89,12 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$userLogin = $_POST["login"];
 	$userPassword = $_POST["password"];
 
-	$serverName = 'localhost';
-	$user = "u47565";
-	$pass = "7165854";
-	$dbName = $user;
-
-	$db = new PDO("mysql:host=$serverName;dbname=$dbName", $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+	require_once("src/db.php");
+	$db = new PDO("mysql:host=$dbServerName;dbname=$dbName", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
 
 	$success = false;
 	try {
