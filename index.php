@@ -19,6 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	} elseif (!empty($_COOKIE['request-error'])) {
 		setcookie("request-error", '', time() - 60 * 60 * 24);
 		$fheader = "<div class='form__container form__container_err'><span class='form__span'>Что-то пошло не так! =(</span></div>";
+	} elseif (!empty($_COOKIE['update'])) {
+		setcookie("update", '0', time() - 60 * 60 * 24);
+		$fheader =
+			"<div class='form__container form__container_good'>
+				<span class='form__span'>Ваши данные обновленны!</span>
+			</div>";
 	} else {
 		$fheader = "<div class='form__contaner'><span class='form__span form__span_header'>ЗАПОЛНИТЕ</span></div>";
 	}
@@ -150,44 +156,78 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	$db = new PDO("mysql:host=$serverName;dbname=$dbName", $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
-	$lastId = null;
-	try {
-		$stmt = $db->prepare("INSERT INTO user2 (name, email, date, gender, limbs, biography) VALUES (:name, :email, :date, :gender, :limbs, :biography)");
-		$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography));
-		$lastId = $db->lastInsertId();
-	} catch (PDOException $e) {
-		print('Error : ' . $e->getMessage());
-		exit();
-	}
+	if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
+		$userId = intval($_SESSION['loginid']);
 
-	try {
-		if ($lastId === null) {
+		try {
+			$sql = "UPDATE user2 SET name = :name, email = :email, date = :date, gender = :gender, limbs = :limbs, biography = :biography WHERE id = :id";
+			$stmt = $db->prepare($sql);
+			$stmt->execute(array('id' => $userId, 'name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography));
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
 			exit();
 		}
-		foreach ($superPowers as $value) {
-			$stmt = $db->prepare("INSERT INTO user_power2 (id, power) VALUES (:id, :power)");
-			$stmt->execute(array('id' => $lastId, 'power' => intval($value)));
+
+		try {
+			$sql = "DELETE FROM user_power2 WHERE id = :id";
+			$stmt = $db->prepare($sql);
+			$stmt->execute(array('id' => $userId));
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
 		}
-	} catch (PDOException $e) {
-		print('Error : ' . $e->getMessage());
-		exit();
-	}
 
-	$login =  "user$lastId";
-	$password = gen_password();
-	try {
-		$stmt = $db->prepare("INSERT INTO user_authentication (id, login, password) VALUES (:id, :login, :password)");
-		$stmt->execute(array('id' => $lastId, 'login' => $login, 'password' => password_hash($password, PASSWORD_DEFAULT)));
-	} catch (PDOException $e) {
-		print('Error : ' . $e->getMessage());
-		exit();
-	}
+		try {
+			foreach ($superPowers as $value) {
+				$stmt = $db->prepare("INSERT INTO user_power2 (id, power) VALUES (:id, :power)");
+				$stmt->execute(array('id' => $userId, 'power' => intval($value)));
+			}
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
+		}
+		setcookie("update", '1', time() + 60 * 60 * 24);
+	} else {
+		$lastId = null;
+		try {
+			$stmt = $db->prepare("INSERT INTO user2 (name, email, date, gender, limbs, biography) VALUES (:name, :email, :date, :gender, :limbs, :biography)");
+			$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography));
+			$lastId = $db->lastInsertId();
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
+		}
 
-	setcookie('login', $login, time() + 60 * 60 * 24);
-	setcookie('password', $password, time() + 60 * 60 * 24);
+		try {
+			if ($lastId === null) {
+				exit();
+			}
+			foreach ($superPowers as $value) {
+				$stmt = $db->prepare("INSERT INTO user_power2 (id, power) VALUES (:id, :power)");
+				$stmt->execute(array('id' => $lastId, 'power' => intval($value)));
+			}
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
+		}
+
+		$login =  "user$lastId";
+		$password = gen_password();
+		try {
+			$stmt = $db->prepare("INSERT INTO user_authentication (id, login, password) VALUES (:id, :login, :password)");
+			$stmt->execute(array('id' => $lastId, 'login' => $login, 'password' => password_hash($password, PASSWORD_DEFAULT)));
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
+		}
+
+		setcookie('login', $login, time() + 60 * 60 * 24);
+		setcookie('password', $password, time() + 60 * 60 * 24);
+		setcookie("save", '1', time() + 60 * 60 * 24);
+	}
 
 	$db = null;
 
-	setcookie("save", '1', time() + 60 * 60 * 24);
+
 	header("Location: index.php");
 }
