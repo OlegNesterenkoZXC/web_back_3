@@ -148,11 +148,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		exit();
 	}
 
-	$login = $lastId;
+	$login =  "user$lastId";
 	$password = gen_password();
 	try {
-		$stmt = $db->prepare("INSERT INTO user_passwords (id, password) VALUES (:id, :password)");
-		$stmt->execute(array('id' => $login, 'password' => password_hash($password, PASSWORD_DEFAULT)));
+		$stmt = $db->prepare("INSERT INTO user_authentication (id, login, password) VALUES (:id, :login, :password)");
+		$stmt->execute(array('id' => $lastId, 'login' => $login, 'password' => password_hash($password, PASSWORD_DEFAULT)));
 	} catch (PDOException $e) {
 		print('Error : ' . $e->getMessage());
 		exit();
