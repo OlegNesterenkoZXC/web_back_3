@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-require_once("src/functions.php");
-
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
 		session_destroy();
