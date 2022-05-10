@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("src/functions.php");
+require_once("src/UserData.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (!empty($_COOKIE['save'])) {
@@ -141,13 +142,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		exit();
 	}
 
-	$name = $_POST["name"];
-	$email = $_POST["email"];
-	$year = intval($_POST["year"]);
-	$gender = $_POST["gender"];
-	$limbs = intval($_POST["numlimbs"]);
-	$superPowers = $_POST["super-powers"];
-	$biography = $_POST["biography"];
+	$userData = new UserData(
+		$_POST["name"],
+		$_POST["email"],
+		intval($_POST["year"]),
+		$_POST["gender"],
+		intval($_POST["numlimbs"]),
+		$_POST["super-powers"],
+		$_POST["biography"]
+	);
 
 	require_once("src/db.php");
 	$db = new PDO("mysql:host=$dbServerName;dbname=$dbName", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
@@ -158,7 +161,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		try {
 			$sql = "UPDATE user2 SET name = :name, email = :email, date = :date, gender = :gender, limbs = :limbs, biography = :biography WHERE id = :id";
 			$stmt = $db->prepare($sql);
-			$stmt->execute(array('id' => $userId, 'name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography));
+			$stmt->execute(array(
+				'id' => $userId, 'name' => $userData->getName(), 'email' => $userData->getEmail(),
+				'date' => $userData->getYear(), 'gender' => $userData->getGender(), 'limbs' => $userData->getNumlimbs(),
+				'biography' => $userData->getBiography()
+			));
 		} catch (PDOException $e) {
 			print('Error : ' . $e->getMessage());
 			exit();
@@ -174,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		}
 
 		try {
-			foreach ($superPowers as $value) {
+			foreach ($userData->getSuperPowers() as $value) {
 				$stmt = $db->prepare("INSERT INTO user_power2 (id, power) VALUES (:id, :power)");
 				$stmt->execute(array('id' => $userId, 'power' => intval($value)));
 			}
@@ -185,9 +192,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		setcookie("update", '1', time() + 60 * 60 * 24);
 	} else {
 		$lastId = null;
+
 		try {
-			$stmt = $db->prepare("INSERT INTO user2 (name, email, date, gender, limbs, biography) VALUES (:name, :email, :date, :gender, :limbs, :biography)");
-			$stmt->execute(array('name' => $name, 'email' => $email, 'date' => $year, 'gender' => $gender, 'limbs' => $limbs, 'biography' => $biography));
+			$stmt = $db->prepare("INSERT INTO user2	(name, email, date, gender, limbs, biography) 
+				VALUES (:name, :email, :date, :gender, :limbs, :biography)");
+
+			$stmt->execute(array(
+				'name' => $userData->getName(), 'email' => $userData->getEmail(), 'date' => $userData->getYear(),
+				'gender' => $userData->getGender(), 'limbs' => $userData->getNumlimbs(),
+				'biography' => $userData->getBiography()
+			));
+
 			$lastId = $db->lastInsertId();
 		} catch (PDOException $e) {
 			print('Error : ' . $e->getMessage());
@@ -198,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			if ($lastId === null) {
 				exit();
 			}
-			foreach ($superPowers as $value) {
+			foreach ($userData->getSuperPowers() as $value) {
 				$stmt = $db->prepare("INSERT INTO user_power2 (id, power) VALUES (:id, :power)");
 				$stmt->execute(array('id' => $lastId, 'power' => intval($value)));
 			}
