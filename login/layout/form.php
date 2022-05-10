@@ -15,7 +15,7 @@
 		<?php
 		echo $loginHeader;
 		?>
-		<form class="form__body" action=".\login.php" method="post">
+		<form class="form__body" action="" method="post">
 			<div class="form__item">
 				<label class="form__label">
 					<input class="form__input form__input_text" placeholder="Логин" type="text" name="login">
@@ -33,6 +33,7 @@
 					<input class="form__submit" type="submit" value="Войти">
 				</label>
 			</div>
+			<input type="hidden" name="action" value="login">
 		</form>
 	</div>
 </body>
