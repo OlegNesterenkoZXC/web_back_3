@@ -13,4 +13,8 @@ if (
 	exit();
 }
 
-print('Вы успешно авторизовались и видите защищенные паролем данные.');
+require_once(BASE_DIR . "admin/layout/start.php");
+require_once(BASE_DIR . "admin/layout/tableUser.php");
+require_once(BASE_DIR . "admin/layout/tableSPs.php");
+require_once(BASE_DIR . "admin/layout/tableStat.php");
+require_once(BASE_DIR . "admin/layout/end.php");
