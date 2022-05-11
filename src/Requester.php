@@ -7,7 +7,7 @@ class Requester
 
 		$db = new PDO("mysql:host=$dbServerName;dbname=$dbName", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
 		try {
-			$sql = "SELECT * FROM admin_auth
+			$sql = "SELECT password FROM admin_auth
 					WHERE login = :login";
 			$stmt = $db->prepare($sql);
 			$stmt->execute(array('login' => $login));
@@ -16,9 +16,9 @@ class Requester
 			print('Error : ' . $e->getMessage());
 			exit();
 		}
-		if (password_verify($password, $result['password'])) {
-			return true;
+		if (empty($result)) {
+			return false;
 		}
-		return false;
+		return password_verify($password, $result['password']);
 	}
 }

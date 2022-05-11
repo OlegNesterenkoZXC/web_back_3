@@ -3,7 +3,6 @@
 require_once(BASE_DIR . "src/Requester.php");
 
 if (
-	empty($result) ||
 	empty($_SERVER['PHP_AUTH_USER']) ||
 	empty($_SERVER['PHP_AUTH_PW']) ||
 	!Requester::adminAuth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])
