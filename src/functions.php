@@ -14,12 +14,12 @@ function checkCookies($name, &$message)
 		$message[$name . '-error'] = '';
 	}
 }
-function writeCookies($name, &$errors)
+function writeCookies($name, $errors, $userData)
 {
 	if (isset($errors[$name])) {
 		setcookie($name . '-error', $errors[$name], time() + 60 * 60 * 24);
 	} else {
-		setcookie($name, $_POST[$name], time() + 60 * 60 * 24 * 365);
+		setcookie($name, $userData, time() + 60 * 60 * 24 * 365);
 	}
 }
 function gen_password($length = 12)
