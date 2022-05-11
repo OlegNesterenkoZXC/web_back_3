@@ -28,6 +28,15 @@ password varchar(256) NOT NULL DEFAULT '',
 PRIMARY KEY (id)
 );
 
+CREATE TABLE admin_auth (
+id int(10) unsigned NOT NULL AUTO_INCREMENT,
+login varchar(256) NOT NULL DEFAULT '',
+password varchar(256) NOT NULL DEFAULT '',
+PRIMARY KEY (id)
+);
+
 INSERT INTO power (id, power) VALUES (1, 'immortality');
 INSERT INTO power (id, power) VALUES (2, 'levitation');
 INSERT INTO power (id, power) VALUES (3, 'walkthrough-walls');
+
+INSERT INTO admin_auth (login, password) VALUES ('admin1', '$2y$10$PYznhf/qNAwrIrCb/2bDWOqIh9TNnjXo/qiVyVJ2sjqLxSDxsADBq');
