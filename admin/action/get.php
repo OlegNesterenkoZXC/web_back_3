@@ -1,12 +1,15 @@
 <?php
+
+require_once(BASE_DIR . "src/Requester.php");
+
 if (
+	empty($result) ||
 	empty($_SERVER['PHP_AUTH_USER']) ||
 	empty($_SERVER['PHP_AUTH_PW']) ||
-	$_SERVER['PHP_AUTH_USER'] != 'admin' ||
-	$_SERVER['PHP_AUTH_PW'] != '1235'
+	!Requester::adminAuth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])
 ) {
 	header('HTTP/1.1 401 Unanthorized');
-	header('WWW-Authenticate: Basic realm="My site"');
+	header('WWW-Authenticate: Basic realm="Test Authentication System"');
 	print('<h1>401 Требуется авторизация</h1>');
 	exit();
 }
