@@ -150,4 +150,40 @@ class Requester
 
 		return $result;
 	}
+
+	public function deleteUser(int $id)
+	{
+		$db = new PDO(
+			"mysql:host={$this->dbUser->getServerName()};dbname={$this->dbUser->getDBName()}",
+			$this->dbUser->getUser(),
+			$this->dbUser->getPassword(),
+			array(PDO::ATTR_PERSISTENT => true)
+		);
+
+		try {
+			$sql =
+				"DELETE FROM user2
+				WHERE id = :id";
+
+			$stmt = $db->prepare($sql);
+			$stmt->execute(array('id' => $id));
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
+		}
+
+		try {
+			$sql =
+				"DELETE FROM user_power2
+				WHERE id = :id";
+
+			$stmt = $db->prepare($sql);
+			$stmt->execute(array('id' => $id));
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
+		}
+
+		$db = null;
+	}
 }

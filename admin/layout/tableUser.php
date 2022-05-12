@@ -20,6 +20,7 @@
 				<td>" . htmlspecialchars($value['gender']) . "</td>
 				<td>" . htmlspecialchars($value['limbs']) . "</td>
 				<td>" . htmlspecialchars($value['biography']) . "</td>
+				<td><a href='?action=delete&id=" . $value['id'] . "'>delete user</a></td>
 			</tr>";
 	}
 	?>

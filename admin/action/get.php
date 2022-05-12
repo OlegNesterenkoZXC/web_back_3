@@ -17,6 +17,13 @@ if (
 	exit();
 }
 
+$action = $_GET['action'] ?? '';
+$id = $_GET['id'] ?? '';
+
+if (!empty($action) && $action === 'delete' && !empty($id)) {
+	$dbRequester->deleteUser($id);
+}
+
 require_once(BASE_DIR . "admin/layout/start.php");
 require_once(BASE_DIR . "admin/layout/tableUser.php");
 require_once(BASE_DIR . "admin/layout/tableSPs.php");
