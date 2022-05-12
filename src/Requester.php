@@ -50,6 +50,7 @@ class Requester
 
 		try {
 			$sql = "SELECT * FROM user2";
+
 			$stmt = $db->prepare($sql);
 			$stmt->execute();
 			$result = $stmt->fetchAll();
@@ -71,7 +72,12 @@ class Requester
 		$result = array();
 
 		try {
-			$sql = "SELECT * FROM user_power2";
+			$sql =
+				"SELECT u.id, p.power 
+				FROM user_power2 u 
+				JOIN power p 
+				ON u.power = p.id";
+
 			$stmt = $db->prepare($sql);
 			$stmt->execute();
 			$result = $stmt->fetchAll();
