@@ -1,5 +1,7 @@
 <?php
 
+use LDAP\Result;
+
 require_once(BASE_DIR . "src/UserDB.php");
 
 class Requester
@@ -82,6 +84,59 @@ class Requester
 				FROM user_power2 u 
 				JOIN power p 
 				ON u.power = p.id";
+
+			$stmt = $db->prepare($sql);
+			$stmt->execute();
+			$result = $stmt->fetchAll();
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
+		}
+
+		$db = null;
+
+		return $result;
+	}
+
+	public function getCountUsersSupPower(int $power): int
+	{
+		$db = new PDO(
+			"mysql:host={$this->dbUser->getServerName()};dbname={$this->dbUser->getDBName()}",
+			$this->dbUser->getUser(),
+			$this->dbUser->getPassword(),
+			array(PDO::ATTR_PERSISTENT => true)
+		);
+
+		try {
+			$sql =
+				"SELECT COUNT(power)
+				FROM user_power2 u 
+				WHERE u.power = :power";
+
+			$stmt = $db->prepare($sql);
+			$stmt->execute(array('power' => $power));
+			$result = $stmt->fetch();
+		} catch (PDOException $e) {
+			print('Error : ' . $e->getMessage());
+			exit();
+		}
+
+		$db = null;
+
+		return intval($result["COUNT(power)"]);
+	}
+
+	public function getNamesSupPower(): array
+	{
+		$db = new PDO(
+			"mysql:host={$this->dbUser->getServerName()};dbname={$this->dbUser->getDBName()}",
+			$this->dbUser->getUser(),
+			$this->dbUser->getPassword(),
+			array(PDO::ATTR_PERSISTENT => true)
+		);
+
+		try {
+			$sql = "SELECT * FROM power";
 
 			$stmt = $db->prepare($sql);
 			$stmt->execute();

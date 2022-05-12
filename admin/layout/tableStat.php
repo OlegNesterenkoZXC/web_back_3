@@ -3,8 +3,13 @@
 		<th>Суперспособность</th>
 		<th>Количество</th>
 	</tr>
-	<tr>
-		<td>Ячейка 3</td>
-		<td>Ячейка 4</td>
-	</tr>
+	<?php
+	foreach ($dbRequester->getNamesSupPower() as $key => $value) {
+		echo
+		"<tr>
+			<td>" . $value['power'] . "</td>
+			<td>" . $dbRequester->getCountUsersSupPower($value['id']) . "</td>
+		</tr>";
+	}
+	?>
 </table>
