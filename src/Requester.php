@@ -1,11 +1,25 @@
 <?php
+
+require_once(BASE_DIR . "src/UserDB.php");
+
 class Requester
 {
-	public static function adminAuth($login, $password)
-	{
-		require_once(BASE_DIR . "src/db.php");
+	private UserDB $dbUser;
 
-		$db = new PDO("mysql:host=$dbServerName;dbname=$dbName", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
+	public function __construct(UserDB $user)
+	{
+		$this->$user;
+	}
+
+	public function adminAuth($login, $password)
+	{
+		$db = new PDO(
+			"mysql:host={$this->dbUser->getServerName()};dbname={$this->dbUser->getDBName()}",
+			$this->dbUser->getUser(),
+			$this->dbUser->getPassword(),
+			array(PDO::ATTR_PERSISTENT => true)
+		);
+
 		try {
 			$sql = "SELECT password FROM admin_auth
 					WHERE login = :login";
@@ -16,17 +30,21 @@ class Requester
 			print('Error : ' . $e->getMessage());
 			exit();
 		}
+
 		if (empty($result)) {
 			return false;
 		}
 		return password_verify($password, $result['password']);
 	}
 
-	public static function getUsersData(): array
+	public function getUsersData(): array
 	{
-		require_once(BASE_DIR . "src/db.php");
-
-		$db = new PDO("mysql:host=$dbServerName;dbname=$dbName", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
+		$db = new PDO(
+			"mysql:host={$this->dbUser->getServerName()};dbname={$this->dbUser->getDBName()}",
+			$this->dbUser->getUser(),
+			$this->dbUser->getPassword(),
+			array(PDO::ATTR_PERSISTENT => true)
+		);
 
 		$result = array();
 
@@ -41,11 +59,14 @@ class Requester
 		}
 		return $result;
 	}
-	public static function getSupPowUsersData(): array
+	public function getSupPowUsersData(): array
 	{
-		require_once(BASE_DIR . "src/db.php");
-
-		$db = new PDO("mysql:host=$dbServerName;dbname=$dbName", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
+		$db = new PDO(
+			"mysql:host={$this->dbUser->getServerName()};dbname={$this->dbUser->getDBName()}",
+			$this->dbUser->getUser(),
+			$this->dbUser->getPassword(),
+			array(PDO::ATTR_PERSISTENT => true)
+		);
 
 		$result = array();
 
