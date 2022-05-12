@@ -3,7 +3,7 @@
 require_once(BASE_DIR . "src/Requester.php");
 require_once(BASE_DIR . "src/UserDB.php");
 
-$dbUser = new UserDB('localhost', 'u47565', '7165854', 'localhost');
+$dbUser = new UserDB('localhost', 'u47565', '7165854', 'u47565');
 $dbRequester = new Requester($dbUser);
 
 if (

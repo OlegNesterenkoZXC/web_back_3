@@ -1,10 +1,10 @@
 <?php
 class UserDB
 {
-	private string $serverName;
-	private string $user;
-	private string $password;
-	private string $dbName;
+	private $serverName;
+	private $user;
+	private $password;
+	private $dbName;
 
 	public function __construct(string $servername, string $user, string $password, string $dbname)
 	{

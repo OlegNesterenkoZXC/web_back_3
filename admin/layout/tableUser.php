@@ -10,7 +10,7 @@
 		<th>Действие</th>
 	</tr>
 	<?php
-	foreach (Requester::getUsersData() as $key => $value) {
+	foreach ($dbRequester->getUsersData() as $key => $value) {
 		echo "
 			<tr>
 				<td>" . htmlspecialchars($value['id']) . "</td>

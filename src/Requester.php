@@ -4,11 +4,11 @@ require_once(BASE_DIR . "src/UserDB.php");
 
 class Requester
 {
-	private UserDB $dbUser;
+	private $dbUser;
 
-	public function __construct(UserDB $user)
+	public function __construct(UserDB $dbUser)
 	{
-		$this->$user;
+		$this->dbUser = $dbUser;
 	}
 
 	public function adminAuth($login, $password)

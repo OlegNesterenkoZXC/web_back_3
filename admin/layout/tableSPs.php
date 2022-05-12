@@ -5,7 +5,7 @@
 	</tr>
 	<tr>
 		<?php
-		foreach (Requester::getSupPowUsersData() as $key => $value) {
+		foreach ($dbRequester->getSupPowUsersData() as $key => $value) {
 			echo "
 			<tr>
 				<td>" . htmlspecialchars($value['id']) . "</td>
