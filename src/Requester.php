@@ -31,6 +31,8 @@ class Requester
 			exit();
 		}
 
+		$db = null;
+
 		if (empty($result)) {
 			return false;
 		}
@@ -58,6 +60,9 @@ class Requester
 			print('Error : ' . $e->getMessage());
 			exit();
 		}
+
+		$db = null;
+
 		return $result;
 	}
 	public function getSupPowUsersData(): array
@@ -85,6 +90,9 @@ class Requester
 			print('Error : ' . $e->getMessage());
 			exit();
 		}
+
+		$db = null;
+
 		return $result;
 	}
 }
