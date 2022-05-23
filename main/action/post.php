@@ -48,6 +48,14 @@ if ($errors["requestError"]) {
 	}
 }
 
+$isAuthorized = !empty($_COOKIE[session_name()]) &&	!empty($_SESSION['login']) && !empty($_SESSION['loginToken']) && password_verify($_SESSION['loginToken'], $_POST['token']);
+
+if ($isAuthorized && !password_verify($_SESSION['loginToken'], $_POST['token'])) {
+	setcookie("request-error", '1', time() + 60 * 60 * 24);
+	header("Location: index.php");
+	exit();
+}
+
 if (count($errors) > 1) {
 	header("Location:");
 	exit();
@@ -55,7 +63,7 @@ if (count($errors) > 1) {
 
 $db = new PDO("mysql:host=$dbServerName;dbname=$dbName", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
 
-if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
+if ($isAuthorized) {
 	$userId = intval($_SESSION['loginid']);
 
 	try {

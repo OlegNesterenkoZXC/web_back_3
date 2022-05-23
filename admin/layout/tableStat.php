@@ -7,8 +7,8 @@
 	foreach ($dbRequester->getNamesSupPower() as $key => $value) {
 		echo
 		"<tr>
-			<td>" . $value['power'] . "</td>
-			<td>" . $dbRequester->getCountUsersSupPower($value['id']) . "</td>
+			<td>" . htmlspecialchars($value['power']) . "</td>
+			<td>" . intval($dbRequester->getCountUsersSupPower($value['id'])) . "</td>
 		</tr>";
 	}
 	?>

@@ -5,7 +5,7 @@
 		</div>
 		<div class='form__container'>
 			<p class='form__p'>Вы можете <a href='login.php' class='form__a'>войти</a>!</p>
-			<p class='form__p'>По логину: <strong><?php echo $_COOKIE['login'] ?></strong></p>
-			<p class='form__p'>И паролю: <strong><?php echo $_COOKIE['password'] ?></strong></p>
+			<p class='form__p'>По логину: <strong><?php echo htmlspecialchars($_COOKIE['login']) ?></strong></p>
+			<p class='form__p'>И паролю: <strong><?php echo htmlspecialchars($_COOKIE['password']) ?></strong></p>
 		</div>
 	</div>

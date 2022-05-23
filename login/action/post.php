@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once(BASE_DIR . "src/db.php");
+require_once(BASE_DIR . "src/functions.php");
 
 $requestError = false;
 if (!empty($_POST)) {
@@ -32,7 +33,7 @@ if (isset($errors)) {
 	exit();
 }
 
-$userLogin = $_POST["login"];
+$inputLogin = $_POST["login"];
 $userPassword = $_POST["password"];
 
 require_once("src/db.php");
@@ -44,12 +45,13 @@ try {
 		"SELECT * FROM user_authentication
 			WHERE login = :login";
 	$stmt = $db->prepare($sql);
-	$stmt->execute(array('login' => $userLogin));
+	$stmt->execute(array('login' => $inputLogin));
 	$result = $stmt->fetch();
 
 	if (!empty($result)) {
 		$success = password_verify($userPassword, $result['password']);
 		$userId = $result['id'];
+		$userLogin = $result['login'];
 	}
 } catch (PDOException $e) {
 	print('Error : ' . $e->getMessage());
@@ -59,6 +61,7 @@ try {
 if ($success) {
 	$_SESSION['login'] = $userLogin;
 	$_SESSION['loginid'] = $userId;
+	$_SESSION['loginToken'] = gen_password(18);
 } else {
 	setcookie('login-auth-error', '1', time() + 60 * 60 * 24);
 	header("Location: login.php");

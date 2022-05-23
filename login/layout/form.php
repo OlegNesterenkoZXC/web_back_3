@@ -3,13 +3,13 @@
 		<label class="form__label">
 			<input class="form__input form__input_text" placeholder="Логин" type="text" name="login">
 		</label>
-		<?php echo $message['login-error']; ?>
+		<?php echo htmlspecialchars($message['login-error']); ?>
 	</div>
 	<div class="form__item">
 		<label class="form__label">
 			<input class="form__input form__input_text" placeholder="Пароль" type="password" name="password">
 		</label>
-		<?php echo $message['password-error']; ?>
+		<?php echo htmlspecialchars($message['password-error']); ?>
 	</div>
 	<div class="form__item form__item_submit">
 		<label class="form__label">

@@ -1,7 +1,5 @@
 <?php
 
-use LDAP\Result;
-
 require_once(BASE_DIR . "src/UserDB.php");
 
 class Requester

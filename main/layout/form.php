@@ -1,15 +1,15 @@
 <form class="form__body" action="" method="post">
 	<div class="form__item">
 		<label class="form__label">
-			<input class="form__input form__input_text" placeholder="Имя" type="text" name="name" value="<?php echo $message['name']; ?>">
+			<input class="form__input form__input_text" placeholder="Имя" type="text" name="name" value="<?php echo htmlspecialchars($message['name']); ?>">
 		</label>
-		<?php echo $message['name-error']; ?>
+		<?php echo htmlspecialchars($message['name-error']); ?>
 	</div>
 	<div class="form__item">
 		<label class="form__label">
-			<input class="form__input form__input_text" placeholder="E-mail" type="text" name="email" value="<?php echo $message['email']; ?>">
+			<input class="form__input form__input_text" placeholder="E-mail" type="text" name="email" value="<?php echo htmlspecialchars($message['email']); ?>">
 		</label>
-		<?php echo $message['email-error']; ?>
+		<?php echo htmlspecialchars($message['email-error']); ?>
 	</div>
 	<div class="form__item">
 		<label class="form__label">
@@ -26,7 +26,7 @@
 				?>
 			</select>
 		</label>
-		<?php echo $message['year-error']; ?>
+		<?php echo htmlspecialchars($message['year-error']); ?>
 	</div>
 	<div class="form__item form__item_radio">
 		<div class="form__container">
@@ -49,7 +49,7 @@
 				?>
 			</label>
 		</div>
-		<?php echo $message['gender-error']; ?>
+		<?php echo htmlspecialchars($message['gender-error']); ?>
 	</div>
 	<div class="form__item form__item_numlimbs">
 		<span class="form__span">Количество конечностей</span>
@@ -64,7 +64,7 @@
 			}
 			?>
 		</div>
-		<?php echo $message['numlimbs-error']; ?>
+		<?php echo htmlspecialchars($message['numlimbs-error']); ?>
 	</div>
 	<div class="form__item form__item_sp">
 		<label class="form__label">
@@ -75,13 +75,13 @@
 				<option class="form__oprion" <?php echo ((isset($message["super-powers"]['3']) && $message["super-powers"]['3'] == '1') ? 'selected' : ''); ?> value="3">Левитация</option>
 			</select>
 		</label>
-		<?php echo $message['super-powers-error'] ?>
+		<?php echo htmlspecialchars($message['super-powers-error']) ?>
 	</div>
 	<div class="form__item">
 		<label class="form__label">
-			<textarea class="form__textarea" placeholder="Расскажите о себе" name="biography"><?php echo $message['biography']; ?></textarea>
+			<textarea class="form__textarea" placeholder="Расскажите о себе" name="biography"><?php echo htmlspecialchars($message['biography']); ?></textarea>
 		</label>
-		<?php echo $message['biography-error'] ?>
+		<?php echo htmlspecialchars($message['biography-error']); ?>
 	</div>
 	<div class="form__item form__item_agreement">
 		<label class="form__label">
@@ -93,4 +93,5 @@
 			<input class="form__submit" type="submit" value="Отправить">
 		</label>
 	</div>
+	<input type="hidden" name="token" value="<?php echo (isset($_SESSION['loginToken']) ? password_hash($_SESSION['loginToken'], PASSWORD_DEFAULT) : ''); ?>">
 </form>

@@ -13,14 +13,14 @@
 	foreach ($dbRequester->getUsersData() as $key => $value) {
 		echo "
 			<tr>
-				<td>" . htmlspecialchars($value['id']) . "</td>
+				<td>" . intval($value['id']) . "</td>
 				<td>" . htmlspecialchars($value['name']) . "</td>
 				<td>" . htmlspecialchars($value['email']) . "</td>
-				<td>" . htmlspecialchars($value['date']) . "</td>
-				<td>" . htmlspecialchars($value['gender']) . "</td>
-				<td>" . htmlspecialchars($value['limbs']) . "</td>
+				<td>" . intval($value['date']) . "</td>
+				<td>" . (intval($value['gender']) == 1 ? 'M' : 'W') . "</td>
+				<td>" . intval($value['limbs']) . "</td>
 				<td>" . htmlspecialchars($value['biography']) . "</td>
-				<td><a href='?action=delete&id=" . $value['id'] . "'>delete user</a></td>
+				<td><a href='?action=delete&id=" . intval($value['id']) . "'>delete user</a></td>
 			</tr>";
 	}
 	?>
