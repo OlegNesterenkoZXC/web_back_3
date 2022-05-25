@@ -9,3 +9,4 @@
 </head>
 
 <body>
+	<a href='index.php' class='form__a'>Выйти</a>
