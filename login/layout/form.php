@@ -16,4 +16,9 @@
 			<input class="form__submit" type="submit" value="Войти">
 		</label>
 	</div>
+	<div class='form__footer'>
+		<p class='form__p'>
+			Перейти на <a href='index.php' class='form__a'>главную</a> страницу!
+		</p>
+	</div>
 </form>
