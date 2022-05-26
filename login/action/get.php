@@ -26,18 +26,12 @@ $message = array('login-error' => '', 'password-error' => '');
 if (!empty($_COOKIE['login-error'])) {
 	setcookie('login-error', '', time() - 60 * 60 * 24);
 
-	$message['login-error'] =
-		"<div class='form__container form__container_err'>
-			<span class='form__span'>{$_COOKIE['login-error']}</span>
-		</div>";
+	$message['login-error'] = $_COOKIE['login-error'];
 }
 
 if (!empty($_COOKIE['password-error'])) {
 	setcookie('password-error', '', time() - 60 * 60 * 24);
-	$message['password-error'] =
-		"<div class='form__container form__container_err'>
-			<span class='form__span'>{$_COOKIE['password-error']}</span>
-		</div>";
+	$message['password-error'] = $_COOKIE['password-error'];
 }
 
 require_once(BASE_DIR . "login/layout/form.php");
