@@ -13,7 +13,8 @@ if (
 ) {
 	header('HTTP/1.1 401 Unanthorized');
 	header('WWW-Authenticate: Basic realm="Test Authentication System"');
-	print('<h1>401 Требуется авторизация</h1>');
+	echo '<h1>401 Требуется авторизация</h1>';
+	echo "<p>Перейти на <a href='index.php' class='form__a'>главную</a> страницу!</p>";
 	exit();
 }
 
